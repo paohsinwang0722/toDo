@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./css/style.css">
+    <script src="https://kit.fontawesome.com/df0e2c0824.js" crossorigin="anonymous"></script>
+</head>
+<body>
+    <div class="container">
+        <h1>Task</h1>
+        <div class="taskBox">
+            <input type="text" placeholder="Pleas input yout task">
+            <button class="add"><i class="fas fa-plus" aria-hidden="true"></i></button>
+        </div>
+        <ul class="taskList">
+           
+        </ul>
+        <div class="editBox disNone">
+            <input type="text" placeholder="Pleas edit yout task">
+            <button class="add">OK</button>
+        </div>
+    </div>
+</body>
+<script>
+const task = document.querySelector('.taskBox input')
+const addBtn = document.querySelector('.taskBox .add')
+const taskLi = document.querySelector('.taskList')
+const editBox = document.querySelector('.editBox')
+const container = document.querySelector('.container')
+//new task
+function showTask(){
+    const newEle = document.createElement('li')
+    const html =`
+            ${task.value}
+            <span class="edit"><i class="fas fa-pen" aria-hidden="true"></i></span>
+            <span class="delete"><i class="fas fa-trash" aria-hidden="true"></i></span>
+    `
+    newEle.innerHTML = html;
+    taskLi.appendChild(newEle);
+    task.value = '';
+}
+
+container.addEventListener('click' , (evt) => {
+
+// new task 到 task list
+    // icon 點擊範圍
+    if(evt.target.parentNode.classList.contains('add')){
+        if(task.value !='')showTask()
+    }
+    // button點擊範圍
+    if(evt.target.classList.contains('add')){
+        if(task.value !='')showTask()
+    }
+
+
+// delete
+    // icon
+    if(evt.target.parentNode.classList.contains('delete')){
+        evt.target.parentNode.parentNode.parentNode.removeChild(evt.target.parentNode.parentNode)
+    }
+    // span
+    if(evt.target.classList.contains('delete')){
+        evt.target.parentNode.parentNode.removeChild(evt.target.parentNode)
+    }
+
+// edit
+    
+    // icon
+    if(evt.target.parentNode.classList.contains('edit')){
+        // 原本的編輯內容
+        let text = evt.target.parentNode.parentNode.innerText
+        editBox.querySelector("input").value = text
+        // 打開編輯頁面
+        editBox.classList.remove('disNone')
+        // 儲存新內容
+        editBox.addEventListener('click', (e) =>{
+            if(e.target.classList.contains('add')){
+                editBox.classList.add('disNone')
+                let html =`
+                    ${editBox.querySelector("input").value}
+                    <span class="edit"><i class="fas fa-pen" aria-hidden="true"></i></span>
+                    <span class="delete"><i class="fas fa-trash" aria-hidden="true"></i></span>
+                `
+                evt.target.parentNode.parentNode.innerHTML = html
+            }
+
+        })
+    }
+    // span
+    if(evt.target.classList.contains('edit')){
+        let text = evt.target.parentNode.innerText
+        editBox.querySelector("input").value = text
+        editBox.classList.remove('disNone')
+        editBox.addEventListener('click' , (e)=>{
+            if(e.target.classList.contains('add')){
+                editBox.classList.add('disNone')
+                let html =`
+                    ${editBox.querySelector("input").value}
+                    <span class="edit"><i class="fas fa-pen" aria-hidden="true"></i></span>
+                    <span class="delete"><i class="fas fa-trash" aria-hidden="true"></i></span>
+                `
+                evt.target.parentNode.innerHTML = html
+                
+            }
+        })
+        
+    }
+
+
+
+})
+</script>
+</html>
