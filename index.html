@@ -109,8 +109,18 @@ container.addEventListener('click' , (evt) => {
         
     }
 
-
-
+// checkBox
+    if(evt.target.classList.contains('doneTask')){
+            evt.target.classList.remove('doneTask')     
+    } else{
+        evt.target.classList.add('doneTask')
+    }
+    
+     
 })
+
+
+
+
 </script>
 </html>
