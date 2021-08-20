@@ -10,17 +10,28 @@
 </head>
 <body>
     <div class="container">
-        <h1>Task</h1>
+        <nav class="nav">
+            <ul class="navList">
+                <li class="navItem">all</li>
+                <li class="navItem">task</li>
+                <li class="navItem">done</li>
+            </ul>
+        </nav>
         <div class="taskBox">
             <input type="text" placeholder="Pleas input yout task">
             <button class="add"><i class="fas fa-plus" aria-hidden="true"></i></button>
         </div>
         <ul class="taskList">
-           
+            
         </ul>
+
         <div class="editBox disNone">
             <input type="text" placeholder="Pleas edit yout task">
             <button class="add">OK</button>
+        </div>
+        <div class="footer">
+            <span>You have pending tasks</span>
+            <button class="deleteAll">Clear All</button>
         </div>
     </div>
 </body>
@@ -33,6 +44,8 @@ const container = document.querySelector('.container')
 //new task
 function showTask(){
     const newEle = document.createElement('li')
+    newEle.classList.add("all")
+    newEle.classList.add("task")
     const html =`
             ${task.value}
             <span class="edit"><i class="fas fa-pen" aria-hidden="true"></i></span>
@@ -108,17 +121,22 @@ container.addEventListener('click' , (evt) => {
         })
         
     }
-
 // checkBox
     if(evt.target.classList.contains('doneTask')){
-            evt.target.classList.remove('doneTask')     
+            evt.target.classList.remove('doneTask')
+            evt.target.classList.add('task')
+                 
     } else{
         evt.target.classList.add('doneTask')
+        evt.target.classList.remove('task')
     }
     
+// clear all
+    if(evt.target.classList.contains('deleteAll')){
+        taskLi.querySelectorAll('li').forEach((e)=>e.remove(e))
+    }
      
 })
-
 
 
 
